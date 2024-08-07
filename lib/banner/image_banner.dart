@@ -12,6 +12,7 @@ class ImageBanner extends StatelessWidget {
   final int? positionType;
   final bool? showNumber;
   final double? indicatorSize;
+  final ValueChanged<String>? imageClick;
 
   const ImageBanner({
     super.key,
@@ -20,6 +21,7 @@ class ImageBanner extends StatelessWidget {
     this.positionType,
     this.showNumber,
     this.indicatorSize,
+    this.imageClick,
   });
 
   @override
@@ -31,7 +33,12 @@ class ImageBanner extends StatelessWidget {
         ..showNumber = showNumber ?? false
         ..indicatorSize = indicatorSize ?? ((showNumber ?? false) ? 20 : 10),
       children: imageList.map((e) {
-        return Image.network(e, fit: BoxFit.cover);
+        return InkWell(
+          onTap: () {
+            imageClick?.call(e);
+          },
+          child: Image.network(e, fit: BoxFit.cover),
+        );
       }).toList(),
     );
   }
